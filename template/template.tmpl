@@ -1,0 +1,22 @@
+{{ range . }}
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  labels:
+    osp/net: {{ .Name }}
+  name: {{ .Name }}
+  namespace: openstack
+spec:
+  config: |
+    {
+      "cniVersion": "3",
+      "name": "{{ .Name }}",
+      "type": "macvlan",
+      "master": "{{ .Interface_name }}",
+      "ipam": {
+        "type": "whereabouts",
+        "range": "{{ .Network_v4 }}",
+      }
+    }
+{{ end }}
