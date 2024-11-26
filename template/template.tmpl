@@ -13,10 +13,11 @@ spec:
       "cniVersion": "3",
       "name": "{{ .Name }}",
       "type": "macvlan",
-      "master": "{{ .Interface_name }}",
+      "master": "{{ .Interface_name | default "eth1" }}",
       "ipam": {
         "type": "whereabouts",
         "range": "{{ .Network_v4 }}",
       }
     }
 {{ end }}
+{{ cat "hello" "hi" }}
